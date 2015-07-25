@@ -4,15 +4,15 @@ package android.example.com.studdybuddy;
  * Created by John on 7/18/15.
  */
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+        import android.os.Bundle;
+        import android.support.v4.app.Fragment;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.ArrayAdapter;
+        import android.widget.ListView;
 
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
 
 public class StudySessionFragment extends Fragment {
@@ -58,8 +58,8 @@ public class StudySessionFragment extends Fragment {
         ListView listView = (ListView) rootView.findViewById(R.id.listView_studdysession);
         listView.setAdapter(mStudySessionAdapter);
 
-//TODO: Set up proper floatingactionbutton to launch a "create" view to make a session
-    mStudySessionAdapter.add("Hello World");
+    //TODO: Set up proper floatingactionbutton to launch a "create" view to make a session
+        mStudySessionAdapter.add("Hello World");
         mStudySessionAdapter.add("Hello World");
         mStudySessionAdapter.add("Hello World");
         mStudySessionAdapter.add("Hello World");
