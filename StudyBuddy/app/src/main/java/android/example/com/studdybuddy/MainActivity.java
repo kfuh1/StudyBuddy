@@ -89,8 +89,10 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 2;
+            // Show  total pages.
+
+            //TODO Change this to 2 when Map View works
+            return 1;
         }
 
         @Override
