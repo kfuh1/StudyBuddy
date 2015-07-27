@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import java.util.Locale;
 
-
+//TODO  IMPORTANT!!!!!! Make sure to downlaoad "Android Support Library" from, under Extras in the Android SDK Manager
 public class MainActivity extends ActionBarActivity {
 
     /**

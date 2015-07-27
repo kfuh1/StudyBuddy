@@ -87,9 +87,6 @@ public class StudySessionFragment extends Fragment {
 
     //TODO: Set up proper floatingactionbutton to launch a "create" view to make a session
 
-
-
-
         return rootView;
     }
 
