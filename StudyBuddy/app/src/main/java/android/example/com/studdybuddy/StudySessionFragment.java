@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.ParseObject;
+
 import java.util.ArrayList;
 
 
@@ -95,6 +97,9 @@ public class StudySessionFragment extends Fragment {
         Toast toast = Toast.makeText(getActivity(),"YEP!", Toast.LENGTH_SHORT);
         toast.show();
         mStudySessionAdapter.add(new StudySession("Test","Test"));
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
 
     }
 
