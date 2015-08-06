@@ -22,7 +22,7 @@ public class ParseApplication extends Application {
         // Add your initialization code here
 
         //REMEMBER TO REMOVE THE TWO KEYS WHEN YOU UPLAOD TO GITHUB
-        Parse.initialize(this, "KEYGOESHERE", "KEYGOESHERE");
+        Parse.initialize(this, "API KEY", "API KEY");
     }
 }
 

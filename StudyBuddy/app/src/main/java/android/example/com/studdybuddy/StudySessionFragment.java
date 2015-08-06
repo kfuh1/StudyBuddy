@@ -4,10 +4,14 @@ package android.example.com.studdybuddy;
  * Created by John on 7/18/15.
  */
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +19,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class StudySessionFragment extends Fragment {
@@ -32,6 +40,7 @@ public class StudySessionFragment extends Fragment {
     private StudySessionAdapter mStudySessionAdapter;
 
     public ArrayList<StudySession> mStudySessions = new ArrayList<StudySession>(); //Hold teh objects themselves
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -52,8 +61,8 @@ public class StudySessionFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        mStudySessionAdapter = new StudySessionAdapter(getActivity(),mStudySessions);
-
+        mStudySessionAdapter = new StudySessionAdapter(getActivity(), mStudySessions);
+         while(!getSessions()); //Try and pull from the datastore and update the listView
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -66,7 +75,6 @@ public class StudySessionFragment extends Fragment {
                 newSession();
             }
         });
-
 
 
         // Get a reference to the ListView, and attach this adapter to it.
@@ -87,15 +95,76 @@ public class StudySessionFragment extends Fragment {
 
         });
 
-    //TODO: Set up proper floatingactionbutton to launch a "create" view to make a session
+        //TODO: Set up proper floatingactionbutton to launch a "create" view to make a session
 
         return rootView;
     }
 
+    public Boolean getSessions() {
+
+        //TODO PARSE: Filter which sessions to save by getting the sessions within X number of yards.
+        //TODO Can do in app, but might be expensive or consuming too much data. Maybe use Parse CloudCode w/ JS?
+
+         //Determine if we have a network connection
+        ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            //ONLINE
+            Toast toast = Toast.makeText(getActivity(),"CONNECTION!", Toast.LENGTH_SHORT);
+            toast.show();
+            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("TestObject");
+            parseQuery.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> list, ParseException e) {
+                    if (e == null) {
+                        for (ParseObject object : list) {
+                            object.pinInBackground();
+                            String test1 = object.getString("foo");
+                            mStudySessionAdapter.add(new StudySession(test1, test1));
+
+                        }
+                    } else {
+                        Log.e("StuddyBuddy", e.toString());
+                    }
+                }
+            });
+        }
+        //If there is no internet connection, pull from local datastore
+        else{
+
+            Toast toast = Toast.makeText(getActivity(),"NO CONNECTION!", Toast.LENGTH_SHORT);
+            toast.show();
+            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("TestObject");
+            parseQuery.fromLocalDatastore();
+            parseQuery.findInBackground(new FindCallback<ParseObject>(){
+                @Override
+                public void done(List<ParseObject> list, ParseException e) {
+                    if (e == null) {
+                        for (ParseObject object : list) {
+                            object.pinInBackground();
+                            String test1 = object.getString("foo");
+                            mStudySessionAdapter.add(new StudySession(test1, test1));
+
+                        }
+                    } else {
+                        Log.e("StuddyBuddy", e.toString());
+                    }
+                }
+            });
+        }
+
+    mStudySessionAdapter.notifyDataSetChanged();
+    return true;
+
+
+}
+
+
+
     //Make a fake session object upon pressing the FAB
     public void newSession(){
-        Toast toast = Toast.makeText(getActivity(),"YEP!", Toast.LENGTH_SHORT);
-        toast.show();
+
         mStudySessionAdapter.add(new StudySession("Test","Test"));
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
