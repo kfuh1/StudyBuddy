@@ -8,4 +8,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_study_session_detail">StudySessionDetailActivity</string>
     <string name="hello_world">Hello world!</string>
+
+    <string name="title_activity_create_session">CreateSessionActivity</string>
 </resources>
