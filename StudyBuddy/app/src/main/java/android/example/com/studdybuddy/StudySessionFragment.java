@@ -62,7 +62,9 @@ public class StudySessionFragment extends Fragment {
 
 
         mStudySessionAdapter = new StudySessionAdapter(getActivity(), mStudySessions);
+
          while(!getSessions()); //Try and pull from the datastore and update the listView
+        mStudySessionAdapter.notifyDataSetChanged();
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -72,7 +74,8 @@ public class StudySessionFragment extends Fragment {
 
         mButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                newSession();
+                Intent intent = new Intent(getActivity(), CreateSessionActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -166,11 +169,11 @@ public class StudySessionFragment extends Fragment {
     public void newSession(){
 
         mStudySessionAdapter.add(new StudySession("Test","Test"));
+        mStudySessionAdapter.notifyDataSetChanged();
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();
 
     }
-
 
 }
