@@ -6,7 +6,7 @@
     android:gravity="center_vertical"
     android:minHeight="80dp"
     android:weightSum="1">
-
+    <!--NEED TO MAKE THISM BETTER FOR LOWER APIS-->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -14,6 +14,7 @@
         android:weightSum="1">
 
         <TextView
+            android:paddingLeft="16dp"
             android:layout_width="114dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -21,6 +22,8 @@
             android:id="@+id/list_item_studysession_name_textview" />
 
         <TextView
+            android:paddingLeft="16dp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"

@@ -23,6 +23,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,10 +73,12 @@ public class StudySessionFragment extends Fragment {
         FloatingActionButton mButton = (FloatingActionButton) rootView.findViewById(R.id.fab);
 
 
+
         mButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CreateSessionActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), CreateSessionActivity.class);
+//                startActivity(intent);
+                newSession();
             }
         });
 
@@ -166,12 +169,24 @@ public class StudySessionFragment extends Fragment {
 
 
     //Make a fake session object upon pressing the FAB
-    public void newSession(){
+    //TODO this is basically a template for how to store to Parse. Its a key-value pair
+    /*
+    "sessionName"
+    "sessionDesc"
+    "locationName"
+    "subjectType"
+    "user"
 
-        mStudySessionAdapter.add(new StudySession("Test","Test"));
+    */
+
+    public void newSession(){
+        ParseUser user = ParseUser.getCurrentUser();
+        mStudySessionAdapter.add(new StudySession("Test", "Test"));
         mStudySessionAdapter.notifyDataSetChanged();
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
+        testObject.put("user",user);
+
         testObject.saveInBackground();
 
     }

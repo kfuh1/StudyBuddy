@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="white">#ffffff</color>
+
+    <color name="studdybuddy_colorPrimary">#673AB7</color>
+    <color name="studdybuddy_colorDark">#512DA8</color>
+
+</resources>
