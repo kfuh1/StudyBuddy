@@ -27,6 +27,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -70,6 +71,10 @@ public class StudySessionFragment extends Fragment {
         FetchDataTask weatherTask = new FetchDataTask();
 
         weatherTask.execute();
+
+        for (int i = 0; i < mStudySessionAdapter.getCount(); i++){
+
+        }
         mStudySessionAdapter.notifyDataSetChanged();
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
