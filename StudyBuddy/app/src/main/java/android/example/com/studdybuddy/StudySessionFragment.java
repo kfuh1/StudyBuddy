@@ -24,10 +24,8 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -136,8 +134,14 @@ public class StudySessionFragment extends Fragment {
                     if (e == null) {
                         for (ParseObject object : list) {
                             object.pinInBackground();
-                            String test1 = object.getString("foo");
-                            mStudySessionAdapter.add(new StudySession(test1, test1));
+                            String sessionName = object.getString("sessionName");
+                            String sessionDesc = object.getString("sessionDesc");
+                            String locationName = object.getString("locationName");
+                            String subjectType = object.getString("subjectType");
+                            String timeToMeet = object.getString("timeToMeet");
+
+                            mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
+                                    locationName, subjectType, timeToMeet));
 
                         }
                     } else {
@@ -159,8 +163,14 @@ public class StudySessionFragment extends Fragment {
                     if (e == null) {
                         for (ParseObject object : list) {
                             object.pinInBackground();
-                            String test1 = object.getString("foo");
-                            mStudySessionAdapter.add(new StudySession(test1, test1));
+                            String sessionName = object.getString("sessionName");
+                            String sessionDesc = object.getString("sessionDesc");
+                            String locationName = object.getString("locationName");
+                            String subjectType = object.getString("subjectType");
+                            String timeToMeet = object.getString("timeToMeet");
+
+                            mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
+                                    locationName, subjectType, timeToMeet));
 
                         }
                     } else {
@@ -189,17 +199,17 @@ public class StudySessionFragment extends Fragment {
 
     */
 
-    public void newSession(){
-        ParseUser user = ParseUser.getCurrentUser();
-        mStudySessionAdapter.add(new StudySession("Test", "Test"));
-        mStudySessionAdapter.notifyDataSetChanged();
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.put("user",user);
-
-        testObject.saveInBackground();
-
-    }
+//    public void newSession(){
+//        ParseUser user = ParseUser.getCurrentUser();
+//        mStudySessionAdapter.add(new StudySession("Test", "Test"));
+//        mStudySessionAdapter.notifyDataSetChanged();
+//        ParseObject testObject = new ParseObject("TestObject");
+//        testObject.put("foo", "bar");
+//        testObject.put("user",user);
+//
+//        testObject.saveInBackground();
+//
+//    }
 
     private class FetchDataTask extends AsyncTask<Void, Void, Void> {
 
@@ -224,8 +234,13 @@ public class StudySessionFragment extends Fragment {
                         if (e == null) {
                             for (ParseObject object : list) {
                                 object.pinInBackground();
-                                String test1 = object.getString("foo");
-                                mStudySessionAdapter.add(new StudySession(test1, test1));
+                                String sessionName = object.getString("sessionName");
+                                String sessionDesc = object.getString("sessionDesc");
+                                String locationName = object.getString("locationName");
+                                String subjectType = object.getString("subjectType");
+                                String timeToMeet = object.getString("timeToMeet");
+                                mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
+                                        locationName, subjectType, timeToMeet));
                                 mStudySessionAdapter.notifyDataSetChanged();
 
                             }
@@ -249,8 +264,13 @@ public class StudySessionFragment extends Fragment {
                         if (e == null) {
                             for (ParseObject object : list) {
                                 object.pinInBackground();
-                                String test1 = object.getString("foo");
-                                mStudySessionAdapter.add(new StudySession(test1, test1));
+                                String sessionName = object.getString("sessionName");
+                                String sessionDesc = object.getString("sessionDesc");
+                                String locationName = object.getString("locationName");
+                                String subjectType = object.getString("subjectType");
+                                String timeToMeet = object.getString("timeToMeet");
+                                mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
+                                        locationName, subjectType, timeToMeet));
                                 mStudySessionAdapter.notifyDataSetChanged();
 
                             }
