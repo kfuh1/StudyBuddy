@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -64,7 +65,11 @@ public class StudySessionFragment extends Fragment {
 
         mStudySessionAdapter = new StudySessionAdapter(getActivity(), mStudySessions);
 
-         while(!getSessions()); //Try and pull from the datastore and update the listView
+         //while(!getSessions()); //Try and pull from the datastore and update the listView
+
+        FetchDataTask weatherTask = new FetchDataTask();
+
+        weatherTask.execute();
         mStudySessionAdapter.notifyDataSetChanged();
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -188,6 +193,71 @@ public class StudySessionFragment extends Fragment {
         testObject.put("user",user);
 
         testObject.saveInBackground();
+
+    }
+
+    private class FetchDataTask extends AsyncTask<Void, Void, Void> {
+
+        /*
+        We chose to use a Async Task instead of something like a syncadapter becuase we would rather get the items on demand rather than
+        continually pulling the new data.
+
+         */
+        @Override
+        protected Void doInBackground(Void... params) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+            if (networkInfo != null && networkInfo.isConnected()) {
+                //ONLINE
+//                Toast toast = Toast.makeText(getActivity(), "CONNECTION!", Toast.LENGTH_SHORT);
+//                toast.show();
+                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("TestObject");
+                parseQuery.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> list, ParseException e) {
+                        if (e == null) {
+                            for (ParseObject object : list) {
+                                object.pinInBackground();
+                                String test1 = object.getString("foo");
+                                mStudySessionAdapter.add(new StudySession(test1, test1));
+                                mStudySessionAdapter.notifyDataSetChanged();
+
+                            }
+                        } else {
+                            Log.e("StuddyBuddy", e.toString());
+                            //return null;
+                        }
+                    }
+                });
+            }
+            //If there is no internet connection, pull from local datastore
+            else {
+
+//                Toast toast = Toast.makeText(getActivity(), "NO CONNECTION!", Toast.LENGTH_SHORT);
+//                toast.show();
+                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("TestObject");
+                parseQuery.fromLocalDatastore();
+                parseQuery.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> list, ParseException e) {
+                        if (e == null) {
+                            for (ParseObject object : list) {
+                                object.pinInBackground();
+                                String test1 = object.getString("foo");
+                                mStudySessionAdapter.add(new StudySession(test1, test1));
+                                mStudySessionAdapter.notifyDataSetChanged();
+
+                            }
+                        } else {
+                            Log.e("StuddyBuddy", e.toString());
+                            //return null;
+                        }
+                    }
+                });
+            }
+            return null;
+        }
 
     }
 
