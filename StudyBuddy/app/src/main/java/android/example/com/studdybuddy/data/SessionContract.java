@@ -42,6 +42,7 @@ public class SessionContract {
 //        public static final String COLUMN_COORD_LAT = "coord_lat";
 //        public static final String COLUMN_COORD_LONG = "coord_long";
 
+        public static final String _ID = "_id";
         public static final String SESSIONNAME  = "sessionName";
         public static final String SESSIONDESC  = "sessionDESC";
         public static final String SESSIONLOCATION = "sessionLocation";
@@ -50,7 +51,7 @@ public class SessionContract {
 
 
 
-        public static Uri buildLocationUri(long id) {
+        public static Uri buildSessionUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
