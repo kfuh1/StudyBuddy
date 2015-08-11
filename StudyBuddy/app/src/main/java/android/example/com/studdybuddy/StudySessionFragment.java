@@ -46,7 +46,7 @@ public class StudySessionFragment extends Fragment{
 
     //TODO: Make this adapter array take in a custom "Study Session" object
 
-    private StudySessionAdapter mStudySessionAdapter;
+    public StudySessionAdapter mStudySessionAdapter;
 
     public ArrayList<StudySession> mStudySessions = new ArrayList<StudySession>(); //Hold teh objects themselves
 
@@ -66,6 +66,12 @@ public class StudySessionFragment extends Fragment{
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mStudySessionAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -77,6 +83,7 @@ public class StudySessionFragment extends Fragment{
         FetchDataTask weatherTask = new FetchDataTask();
 
         weatherTask.execute();
+        mStudySessionAdapter.notifyDataSetChanged();
 
 
     //Copy the Parse Database to a local one for backup.
@@ -142,77 +149,6 @@ public class StudySessionFragment extends Fragment{
         return rootView;
     }
 
-    public Boolean getSessions() {
-
-        //TODO PARSE: Filter which sessions to save by getting the sessions within X number of yards.
-        //TODO Can do in app, but might be expensive or consuming too much data. Maybe use Parse CloudCode w/ JS?
-
-         //Determine if we have a network connection
-        ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-        if (networkInfo != null && networkInfo.isConnected()) {
-            //ONLINE
-            Toast toast = Toast.makeText(getActivity(),"CONNECTION!", Toast.LENGTH_SHORT);
-            toast.show();
-            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("TestObject");
-            parseQuery.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> list, ParseException e) {
-                    if (e == null) {
-                        for (ParseObject object : list) {
-                            object.pinInBackground();
-                            String sessionName = object.getString("sessionName");
-                            String sessionDesc = object.getString("sessionDesc");
-                            String locationName = object.getString("locationName");
-                            String subjectType = object.getString("subjectType");
-                            String timeToMeet = object.getString("timeToMeet");
-
-                            mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
-                                    locationName, subjectType, timeToMeet));
-
-                        }
-                    } else {
-                        Log.e("StuddyBuddy", e.toString());
-                    }
-                }
-            });
-        }
-        //If there is no internet connection, pull from local datastore
-        else{
-
-            Toast toast = Toast.makeText(getActivity(),"NO CONNECTION!", Toast.LENGTH_SHORT);
-            toast.show();
-            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("TestObject");
-            parseQuery.fromLocalDatastore();
-            parseQuery.findInBackground(new FindCallback<ParseObject>(){
-                @Override
-                public void done(List<ParseObject> list, ParseException e) {
-                    if (e == null) {
-                        for (ParseObject object : list) {
-                            object.pinInBackground();
-                            String sessionName = object.getString("sessionName");
-                            String sessionDesc = object.getString("sessionDesc");
-                            String locationName = object.getString("locationName");
-                            String subjectType = object.getString("subjectType");
-                            String timeToMeet = object.getString("timeToMeet");
-
-                            mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
-                                    locationName, subjectType, timeToMeet));
-
-                        }
-                    } else {
-                        Log.e("StuddyBuddy", e.toString());
-                    }
-                }
-            });
-        }
-
-    mStudySessionAdapter.notifyDataSetChanged();
-    return true;
-
-
-}
 
 
 
@@ -227,17 +163,7 @@ public class StudySessionFragment extends Fragment{
 
     */
 
-//    public void newSession(){
-//        ParseUser user = ParseUser.getCurrentUser();
-//        mStudySessionAdapter.add(new StudySession("Test", "Test"));
-//        mStudySessionAdapter.notifyDataSetChanged();
-//        ParseObject testObject = new ParseObject("TestObject");
-//        testObject.put("foo", "bar");
-//        testObject.put("user",user);
-//
-//        testObject.saveInBackground();
-//
-//    }
+
 
    // @Override
 //    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -278,7 +204,7 @@ public class StudySessionFragment extends Fragment{
                 //ONLINE
 //                Toast toast = Toast.makeText(getActivity(), "CONNECTION!", Toast.LENGTH_SHORT);
 //                toast.show();
-                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("TestObject");
+                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("StudySession");
                 parseQuery.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> list, ParseException e) {
@@ -307,7 +233,7 @@ public class StudySessionFragment extends Fragment{
 
 //                Toast toast = Toast.makeText(getActivity(), "NO CONNECTION!", Toast.LENGTH_SHORT);
 //                toast.show();
-                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("TestObject");
+                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("StudySession");
                 parseQuery.fromLocalDatastore();
                 parseQuery.findInBackground(new FindCallback<ParseObject>() {
                     @Override

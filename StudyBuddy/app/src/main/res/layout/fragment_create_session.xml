@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/title_text"
             android:paddingLeft="10dp"
-            android:text="@string/hello_world">
+            android:text="@string/enter_text">
             <requestFocus />
         </EditText>
     </LinearLayout>
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/desc_text"
             android:paddingLeft="10dp"
-            android:text="@string/hello_world">
+            android:text="@string/enter_text">
             <requestFocus />
         </EditText>
     </LinearLayout>
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/location_text"
             android:paddingLeft="10dp"
-            android:text="@string/hello_world">
+            android:text="@string/enter_text">
             <requestFocus />
         </EditText>
     </LinearLayout>
