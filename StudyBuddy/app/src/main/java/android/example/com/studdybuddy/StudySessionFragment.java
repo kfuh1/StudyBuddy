@@ -95,6 +95,7 @@ public class StudySessionFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), StudySessionDetailActivity.class);
                 Bundle bundle = new Bundle(); //Use a bundle to sotre multiple objects with a key/value pair
                 bundle.putString("sessionName", mStudySessionAdapter.getItem(position).getSessionName());
+                bundle.putString("sessionDescription", mStudySessionAdapter.getItem(position).getSessionDescription());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
