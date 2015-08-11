@@ -22,15 +22,11 @@ public class CreateSessionActivityFragment extends Fragment implements AdapterVi
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();
-        View rootView = inflater.inflate(R.layout.fragment_create_session, container, false);
+
 
         /* set dropdown list of meeting time choice */
-        Spinner timeSpinner = (Spinner) getActivity().findViewById(R.id.meeting_time_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.meeting_time_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        timeSpinner.setAdapter(adapter);
 
+        View rootView = inflater.inflate(R.layout.fragment_create_session, container, false);
         return rootView;
 
     }

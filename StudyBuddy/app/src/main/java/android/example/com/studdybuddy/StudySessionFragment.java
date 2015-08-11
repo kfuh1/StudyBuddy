@@ -76,9 +76,9 @@ public class StudySessionFragment extends Fragment {
 
         mButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), CreateSessionActivity.class);
-//                startActivity(intent);
-                newSession();
+                Intent intent = new Intent(getActivity(), CreateSessionActivity.class);
+                startActivity(intent);
+                //newSession();
             }
         });
 

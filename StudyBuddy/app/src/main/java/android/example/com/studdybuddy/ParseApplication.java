@@ -27,7 +27,7 @@ public class ParseApplication extends Application {
         // Add your initialization code here
 
         //REMEMBER TO REMOVE THE TWO KEYS WHEN YOU UPLAOD TO GITHUB
-        Parse.initialize(this, “KEY”, “KEY”);
+        Parse.initialize(this, "fd", "sds");
 
         ParseAnonymousUtils.logIn(new LogInCallback() {
             @Override
