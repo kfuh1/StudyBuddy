@@ -10,4 +10,20 @@
         <item>1 hr 45 min</item>
         <item>2 hr</item>
     </string-array>
+    <string-array name="subject_array">
+        <item>Art</item>
+        <item>Biology</item>
+        <item>Business</item>
+        <item>Computer Science</item>
+        <item>Chemistry</item>
+        <item>Education</item>
+        <item>Engineering</item>
+        <item>Geology</item>
+        <item>Health</item>
+        <item>Law and Politics</item>
+        <item>Math</item>
+        <item>Physics</item>
+        <item>Psychology</item>
+        <item>Other</item>
+    </string-array>
 </resources>
