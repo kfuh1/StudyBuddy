@@ -4,14 +4,21 @@ package android.example.com.studdybuddy;
  * Created by John on 7/18/15.
  */
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.example.com.studdybuddy.data.SessionContract;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +36,10 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 
 
-public class StudySessionFragment extends Fragment {
+public class StudySessionFragment extends Fragment{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -72,7 +80,24 @@ public class StudySessionFragment extends Fragment {
 
         weatherTask.execute();
 
+
+    //Copy the Parse Database to a local one for backup.
+        Vector<ContentValues> cVVector = new Vector<ContentValues>(mStudySessionAdapter.getCount());
         for (int i = 0; i < mStudySessionAdapter.getCount(); i++){
+            ContentValues sessionValues = new ContentValues();
+
+            StudySession pulledInfo = mStudySessionAdapter.getItem(i);
+            sessionValues.put(SessionContract.SessionEntry.SESSIONNAME, pulledInfo.getSessionName());
+            sessionValues.put(SessionContract.SessionEntry.SESSIONDESC, pulledInfo.getSessionDescription());
+
+
+            cVVector.add(sessionValues);
+        }
+
+        if ( cVVector.size() > 0 ) {
+            ContentValues[] cvArray = new ContentValues[cVVector.size()];
+            cVVector.toArray(cvArray);
+            getActivity().getContentResolver().bulkInsert(SessionContract.SessionEntry.CONTENT_URI, cvArray);
 
         }
         mStudySessionAdapter.notifyDataSetChanged();
@@ -112,6 +137,8 @@ public class StudySessionFragment extends Fragment {
         });
 
         //TODO: Set up proper floatingactionbutton to launch a "create" view to make a session
+
+
 
         return rootView;
     }
@@ -200,6 +227,29 @@ public class StudySessionFragment extends Fragment {
         testObject.saveInBackground();
 
     }
+
+   // @Override
+//    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+//
+//        Uri weatherForLocationUri = SessionContract.SessionEntry.buildSessionUri();
+//
+//        return new CursorLoader(getActivity(),
+//                weatherForLocationUri,
+//                FORECAST_COLUMNS,
+//                null,
+//                null,
+//                sortOrder);
+//    }
+
+//    @Override
+//    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+//
+//    }
+//
+//    @Override
+//    public void onLoaderReset(Loader<Cursor> loader) {
+//
+//    }
 
     private class FetchDataTask extends AsyncTask<Void, Void, Void> {
 
