@@ -63,5 +63,5 @@
         android:text="@string/save_button"
         android:layout_gravity="center_horizontal"
         android:onClick="saveCreateData"/>
-
+        android:layout_width="wrap_content" />
 </LinearLayout>
