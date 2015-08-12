@@ -20,13 +20,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
+import android.widget.Toast;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -159,7 +161,7 @@ public class StudySessionFragment extends Fragment{
                 bundle.putString("locationName", mStudySessionAdapter.getItem(position).getLocationName());
                 bundle.putString("subjectType", mStudySessionAdapter.getItem(position).getSubjectType());
                 bundle.putString("timeToMeet", mStudySessionAdapter.getItem(position).getTimeToMeet());
-                bundle.putString("createAt", mStudySessionAdapter.getItem(position).getCreateTime());
+                bundle.putString("createdAt", mStudySessionAdapter.getItem(position).getCreateTime());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -235,14 +237,14 @@ public class StudySessionFragment extends Fragment{
                     public void done(List<ParseObject> list, ParseException e) {
                         if (e == null) {
                             for (ParseObject object : list) {
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
                                 object.pinInBackground();
                                 String sessionName = object.getString("sessionName");
                                 String sessionDesc = object.getString("sessionDesc");
                                 String locationName = object.getString("locationName");
                                 String subjectType = object.getString("subjectType");
                                 String timeToMeet = object.getString("timeToMeet");
-                                String createTime = dateFormat.format(object.getDate("createAt"));
+                                String createTime = object.getCreatedAt().toString();
                                 mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
                                         locationName, subjectType, timeToMeet, createTime));
                                 mStudySessionAdapter.notifyDataSetChanged();
@@ -268,8 +270,8 @@ public class StudySessionFragment extends Fragment{
                     public void done(List<ParseObject> list, ParseException e) {
                         if (e == null) {
                             for (ParseObject object : list) {
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                                object.pinInBackground();
+                                //DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+                                //object.pinInBackground();
 
                                 //object.pinInBackground();
 
@@ -278,7 +280,7 @@ public class StudySessionFragment extends Fragment{
                                 String locationName = object.getString("locationName");
                                 String subjectType = object.getString("subjectType");
                                 String timeToMeet = object.getString("timeToMeet");
-                                String createTime = dateFormat.format(object.getDate("createAt"));
+                                String createTime = object.getCreatedAt().toString();
                                 mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
                                         locationName, subjectType, timeToMeet, createTime));
                                 mStudySessionAdapter.notifyDataSetChanged();
