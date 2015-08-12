@@ -70,19 +70,23 @@ public class StudySessionFragment extends Fragment{
     public void onResume() {
 
         super.onResume();
-        FetchDataTask weatherTask = new FetchDataTask();
-
-        weatherTask.execute();
         mStudySessionAdapter.notifyDataSetChanged();
 
     }
 
-
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        FetchDataTask weatherTask = new FetchDataTask();
+//
+//        weatherTask.execute();
+//        mStudySessionAdapter.notifyDataSetChanged();
+//    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mStudySessionAdapter.notifyDataSetChanged();
+        //mStudySessionAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -119,7 +123,7 @@ public class StudySessionFragment extends Fragment{
             getActivity().getContentResolver().bulkInsert(SessionContract.SessionEntry.CONTENT_URI, cvArray);
 
         }
-        mStudySessionAdapter.notifyDataSetChanged();
+
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -233,7 +237,7 @@ public class StudySessionFragment extends Fragment{
                                 String timeToMeet = object.getString("timeToMeet");
                                 mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
                                         locationName, subjectType, timeToMeet));
-                                mStudySessionAdapter.notifyDataSetChanged();
+                                //mStudySessionAdapter.notifyDataSetChanged();
 
                             }
                         } else {
@@ -255,7 +259,7 @@ public class StudySessionFragment extends Fragment{
                     public void done(List<ParseObject> list, ParseException e) {
                         if (e == null) {
                             for (ParseObject object : list) {
-                                object.pinInBackground();
+                                //object.pinInBackground();
                                 String sessionName = object.getString("sessionName");
                                 String sessionDesc = object.getString("sessionDesc");
                                 String locationName = object.getString("locationName");
@@ -263,7 +267,8 @@ public class StudySessionFragment extends Fragment{
                                 String timeToMeet = object.getString("timeToMeet");
                                 mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
                                         locationName, subjectType, timeToMeet));
-                                mStudySessionAdapter.notifyDataSetChanged();
+
+                                //mStudySessionAdapter.notifyDataSetChanged();
 
                             }
                         } else {
