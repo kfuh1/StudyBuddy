@@ -13,8 +13,9 @@ import android.widget.TextView;
  */
 public class StudySessionDetailActivityFragment extends Fragment {
 
-    private String testName;
-    private String testDescription;
+    private String sessionName;
+    private String sessionDescription;
+    private String sessionLocation;
 
     public StudySessionDetailActivityFragment() {
     }
@@ -30,12 +31,20 @@ public class StudySessionDetailActivityFragment extends Fragment {
 
         Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null ) {
-            testName = bundle.getString("sessionName");
+            sessionName = bundle.getString("sessionName");
             ((TextView) rootView.findViewById(R.id.classText)) /*detail_text_temp*/
-                    .setText(testName);
-            testDescription = bundle.getString("sessionDescription");
+                    .setText(sessionName);
+            sessionDescription = bundle.getString("sessionDescription");
             ((TextView) rootView.findViewById(R.id.descriptionText))
-                    .setText(testDescription);
+                    .setText(sessionDescription);
+
+
+            sessionLocation = bundle.getString("sessionLocation");
+            ((TextView) rootView.findViewById(R.id.LocationText))
+                    .setText(sessionLocation);
+
+
+
         }
 
 

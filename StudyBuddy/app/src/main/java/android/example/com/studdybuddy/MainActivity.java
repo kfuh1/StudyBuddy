@@ -61,9 +61,7 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -90,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
         public int getCount() {
             // Show  total pages.
 
-            //TODO Change this to 2 when Map View works
+            //TODO Change this to 2 if Map View works
             return 1;
         }
 

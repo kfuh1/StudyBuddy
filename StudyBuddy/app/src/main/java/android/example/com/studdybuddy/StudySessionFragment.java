@@ -63,7 +63,21 @@ public class StudySessionFragment extends Fragment{
     }
 
     public StudySessionFragment() {
+
     }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        FetchDataTask weatherTask = new FetchDataTask();
+
+        weatherTask.execute();
+        mStudySessionAdapter.notifyDataSetChanged();
+
+    }
+
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -136,6 +150,7 @@ public class StudySessionFragment extends Fragment{
                 Bundle bundle = new Bundle(); //Use a bundle to sotre multiple objects with a key/value pair
                 bundle.putString("sessionName", mStudySessionAdapter.getItem(position).getSessionName());
                 bundle.putString("sessionDescription", mStudySessionAdapter.getItem(position).getSessionDescription());
+                bundle.putString("sessionLocation", mStudySessionAdapter.getItem(position).getLocationName());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
