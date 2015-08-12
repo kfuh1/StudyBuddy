@@ -43,12 +43,12 @@ public class StudySessionDetailActivityFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.classText))
                     .setText(mSubject);
             mLocation = bundle.getString("locationName");
-            ((TextView) rootView.findViewById(R.id.location_text))
+            ((TextView) rootView.findViewById(R.id.locationText))
                     .setText(mLocation);
             mTimeToMeet = bundle.getString("timeToMeet");
             ((TextView) rootView.findViewById(R.id.timeToMeetText))
                     .setText(mTimeToMeet);
-            mCreateTime = bundle.getString("createAt");
+            mCreateTime = bundle.getString("createdAt");
             ((TextView) rootView.findViewById(R.id.createTimeText))
                     .setText(mCreateTime);
 
