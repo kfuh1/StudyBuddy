@@ -7,31 +7,26 @@ package android.example.com.studdybuddy;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.example.com.studdybuddy.data.SessionContract;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -136,6 +131,9 @@ public class StudySessionFragment extends Fragment{
                 Bundle bundle = new Bundle(); //Use a bundle to sotre multiple objects with a key/value pair
                 bundle.putString("sessionName", mStudySessionAdapter.getItem(position).getSessionName());
                 bundle.putString("sessionDescription", mStudySessionAdapter.getItem(position).getSessionDescription());
+                bundle.putString("locationName", mStudySessionAdapter.getItem(position).getLocationName());
+                bundle.putString("subjectType", mStudySessionAdapter.getItem(position).getSubjectType());
+                bundle.putString("timeToMeet", mStudySessionAdapter.getItem(position).getTimeToMeet());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -210,14 +208,16 @@ public class StudySessionFragment extends Fragment{
                     public void done(List<ParseObject> list, ParseException e) {
                         if (e == null) {
                             for (ParseObject object : list) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                                 object.pinInBackground();
                                 String sessionName = object.getString("sessionName");
                                 String sessionDesc = object.getString("sessionDesc");
                                 String locationName = object.getString("locationName");
                                 String subjectType = object.getString("subjectType");
                                 String timeToMeet = object.getString("timeToMeet");
+                                String createTime = dateFormat.format(object.getDate("createAt"));
                                 mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
-                                        locationName, subjectType, timeToMeet));
+                                        locationName, subjectType, timeToMeet, createTime));
                                 mStudySessionAdapter.notifyDataSetChanged();
 
                             }
@@ -240,14 +240,16 @@ public class StudySessionFragment extends Fragment{
                     public void done(List<ParseObject> list, ParseException e) {
                         if (e == null) {
                             for (ParseObject object : list) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                                 object.pinInBackground();
                                 String sessionName = object.getString("sessionName");
                                 String sessionDesc = object.getString("sessionDesc");
                                 String locationName = object.getString("locationName");
                                 String subjectType = object.getString("subjectType");
                                 String timeToMeet = object.getString("timeToMeet");
+                                String createTime = dateFormat.format(object.getDate("createAt"));
                                 mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
-                                        locationName, subjectType, timeToMeet));
+                                        locationName, subjectType, timeToMeet, createTime));
                                 mStudySessionAdapter.notifyDataSetChanged();
 
                             }

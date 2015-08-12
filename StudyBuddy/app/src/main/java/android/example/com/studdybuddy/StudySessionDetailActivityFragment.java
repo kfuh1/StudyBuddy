@@ -13,9 +13,12 @@ import android.widget.TextView;
  */
 public class StudySessionDetailActivityFragment extends Fragment {
 
-    private String testName;
-    private String testDescription;
-
+    private String mTitle;
+    private String mDesc;
+    private String mSubject;
+    private String mLocation;
+    private String mTimeToMeet;
+    private String mCreateTime;
     public StudySessionDetailActivityFragment() {
     }
 
@@ -30,12 +33,24 @@ public class StudySessionDetailActivityFragment extends Fragment {
 
         Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null ) {
-            testName = bundle.getString("sessionName");
-            ((TextView) rootView.findViewById(R.id.classText)) /*detail_text_temp*/
-                    .setText(testName);
-            testDescription = bundle.getString("sessionDescription");
+            mTitle= bundle.getString("sessionName");
+            ((TextView) rootView.findViewById(R.id.titleText)) /*detail_text_temp*/
+                    .setText(mTitle);
+            mDesc = bundle.getString("sessionDescription");
             ((TextView) rootView.findViewById(R.id.descriptionText))
-                    .setText(testDescription);
+                    .setText(mDesc);
+            mSubject = bundle.getString("subjectType");
+            ((TextView) rootView.findViewById(R.id.classText))
+                    .setText(mSubject);
+            mLocation = bundle.getString("locationName");
+            ((TextView) rootView.findViewById(R.id.location_text))
+                    .setText(mLocation);
+            mTimeToMeet = bundle.getString("timeToMeet");
+            ((TextView) rootView.findViewById(R.id.timeToMeetText))
+                    .setText(mTimeToMeet);
+            mCreateTime = bundle.getString("createAt");
+            ((TextView) rootView.findViewById(R.id.createTimeText))
+                    .setText(mCreateTime);
         }
 
 

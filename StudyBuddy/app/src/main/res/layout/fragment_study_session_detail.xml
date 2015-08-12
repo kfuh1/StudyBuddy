@@ -1,21 +1,37 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="android.example.com.studdybuddy.StudySessionDetailActivityFragment"
+    android:orientation="vertical"
     android:id="@+id/fragment_study_session_detail">
-
-    <TextView  android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_text_temp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Class"
+        android:text="Title"
+        android:id="@+id/titleView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/titleText"
+        android:layout_below="@+id/titleView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Subject"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -35,8 +51,7 @@
         android:text="Description"
         android:id="@+id/textView3"
         android:layout_below="@+id/classText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="105dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,6 +59,38 @@
         android:text="New Text"
         android:id="@+id/descriptionText"
         android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Meeting Creation Time"
+        android:id="@+id/creationTimeView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/createTimeText"
+        android:layout_below="@+id/creationTimeView"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Time Until Meeting (From Meeting Creation Time)"
+        android:id="@+id/timeToMeetView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/timeToMeetText"
+        android:layout_below="@+id/timeToMeetView"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -53,17 +100,15 @@
         android:text="Location"
         android:id="@+id/textView5"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="102dp" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/LocationText"
+        android:id="@+id/locationText"
         android:layout_alignTop="@+id/textView5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -76,4 +121,4 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-</RelativeLayout>
+</LinearLayout>
