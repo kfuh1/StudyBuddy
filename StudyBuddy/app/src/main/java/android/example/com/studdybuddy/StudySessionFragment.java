@@ -65,19 +65,23 @@ public class StudySessionFragment extends Fragment{
     public void onResume() {
 
         super.onResume();
-        FetchDataTask weatherTask = new FetchDataTask();
-
-        weatherTask.execute();
         mStudySessionAdapter.notifyDataSetChanged();
 
     }
 
-
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        FetchDataTask weatherTask = new FetchDataTask();
+//
+//        weatherTask.execute();
+//        mStudySessionAdapter.notifyDataSetChanged();
+//    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mStudySessionAdapter.notifyDataSetChanged();
+        //mStudySessionAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -114,7 +118,7 @@ public class StudySessionFragment extends Fragment{
             getActivity().getContentResolver().bulkInsert(SessionContract.SessionEntry.CONTENT_URI, cvArray);
 
         }
-        mStudySessionAdapter.notifyDataSetChanged();
+
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -145,10 +149,10 @@ public class StudySessionFragment extends Fragment{
                 Bundle bundle = new Bundle(); //Use a bundle to sotre multiple objects with a key/value pair
                 bundle.putString("sessionName", mStudySessionAdapter.getItem(position).getSessionName());
                 bundle.putString("sessionDescription", mStudySessionAdapter.getItem(position).getSessionDescription());
-<
                 bundle.putString("locationName", mStudySessionAdapter.getItem(position).getLocationName());
                 bundle.putString("subjectType", mStudySessionAdapter.getItem(position).getSubjectType());
                 bundle.putString("timeToMeet", mStudySessionAdapter.getItem(position).getTimeToMeet());
+                bundle.putString("createAt", mStudySessionAdapter.getItem(position).getCreateTime());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -257,6 +261,9 @@ public class StudySessionFragment extends Fragment{
                             for (ParseObject object : list) {
                                 SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                                 object.pinInBackground();
+
+                                //object.pinInBackground();
+
                                 String sessionName = object.getString("sessionName");
                                 String sessionDesc = object.getString("sessionDesc");
                                 String locationName = object.getString("locationName");
