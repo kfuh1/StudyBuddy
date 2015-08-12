@@ -65,6 +65,12 @@ public class StudySessionFragment extends Fragment{
     public void onResume() {
 
         super.onResume();
+        Toast toast = Toast.makeText(getActivity(), "NO CONsdsdsdNECTION!", Toast.LENGTH_SHORT);
+             toast.show();
+
+        FetchDataTask weatherTask = new FetchDataTask();
+
+        weatherTask.execute();
         mStudySessionAdapter.notifyDataSetChanged();
 
     }
@@ -87,15 +93,16 @@ public class StudySessionFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        Toast toast = Toast.makeText(getActivity(), "NO dsdsdssd!", Toast.LENGTH_SHORT);
+        toast.show();
 
         mStudySessionAdapter = new StudySessionAdapter(getActivity(), mStudySessions);
 
          //while(!getSessions()); //Try and pull from the datastore and update the listView
 
-        FetchDataTask weatherTask = new FetchDataTask();
-
-        weatherTask.execute();
+//        FetchDataTask weatherTask = new FetchDataTask();
+//
+//        weatherTask.execute();
         mStudySessionAdapter.notifyDataSetChanged();
 
 
@@ -217,6 +224,7 @@ public class StudySessionFragment extends Fragment{
             ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
+            mStudySessions.clear();
             if (networkInfo != null && networkInfo.isConnected()) {
                 //ONLINE
 //                Toast toast = Toast.makeText(getActivity(), "CONNECTION!", Toast.LENGTH_SHORT);
@@ -252,6 +260,7 @@ public class StudySessionFragment extends Fragment{
 
 //                Toast toast = Toast.makeText(getActivity(), "NO CONNECTION!", Toast.LENGTH_SHORT);
 //                toast.show();
+
                 ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("StudySession");
                 parseQuery.fromLocalDatastore();
                 parseQuery.findInBackground(new FindCallback<ParseObject>() {
