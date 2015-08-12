@@ -37,6 +37,7 @@ public class StudySessionDetailActivityFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.titleText)) /*detail_text_temp*/
                     .setText(mTitle);
             mDesc = bundle.getString("sessionDescription");
+            ((TextView) rootView.findViewById(R.id.descriptionText))
                     .setText(mDesc);
             mSubject = bundle.getString("subjectType");
             ((TextView) rootView.findViewById(R.id.classText))
