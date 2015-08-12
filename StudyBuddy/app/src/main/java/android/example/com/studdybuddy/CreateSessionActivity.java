@@ -1,7 +1,10 @@
 package android.example.com.studdybuddy;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
@@ -45,7 +48,7 @@ public class CreateSessionActivity extends ActionBarActivity implements AdapterV
         ParseObject sessionObject = new ParseObject("StudySession");
         ParseUser user = ParseUser.getCurrentUser();
 
-        if (user != null) {
+
             EditText titleText = (EditText) findViewById(R.id.title_text);
             EditText descText = (EditText) findViewById(R.id.desc_text);
             EditText locationText = (EditText) findViewById(R.id.location_text);
@@ -69,13 +72,24 @@ public class CreateSessionActivity extends ActionBarActivity implements AdapterV
             sessionObject.put("locationName", locationText.getText().toString());
             sessionObject.put("subjectType", subjectName);
             sessionObject.put("timeToMeet", timeToMeet);
-            sessionObject.put("user", user);
 
-            sessionObject.saveInBackground();
+            ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-            finish();
+            if (networkInfo != null && networkInfo.isConnected() && user != null) {
 
-        }
+                sessionObject.saveInBackground();
+                finish();
+            }
+
+            else {
+
+                sessionObject.saveEventually();
+                finish();
+            }
+
+
+
 
     }
 
