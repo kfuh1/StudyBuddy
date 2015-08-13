@@ -26,13 +26,11 @@ public class StudySessionDetailActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
-
         View rootView =  inflater.inflate(R.layout.fragment_study_session_detail, container, false);
 
         Bundle bundle = getActivity().getIntent().getExtras();
         if (bundle != null ) {
+            /* get and set values as they appeared on create screen */
             mTitle= bundle.getString("sessionName");
             ((TextView) rootView.findViewById(R.id.titleText)) /*detail_text_temp*/
                     .setText(mTitle);
@@ -45,6 +43,7 @@ public class StudySessionDetailActivityFragment extends Fragment {
             mLocation = bundle.getString("locationName");
             ((TextView) rootView.findViewById(R.id.locationText))
                     .setText(mLocation);
+            /* time until meeting based on creation time */
             mTimeToMeet = bundle.getString("timeToMeet");
             ((TextView) rootView.findViewById(R.id.timeToMeetText))
                     .setText(mTimeToMeet);
@@ -53,9 +52,6 @@ public class StudySessionDetailActivityFragment extends Fragment {
                     .setText(mCreateTime);
 
         }
-
-
-
         return rootView;
     }
 }
