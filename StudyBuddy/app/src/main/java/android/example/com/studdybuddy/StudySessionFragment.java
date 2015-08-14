@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.example.com.studdybuddy.data.SessionContract;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -28,9 +27,12 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.Date;
 
 
 public class StudySessionFragment extends Fragment{
@@ -178,7 +180,10 @@ public class StudySessionFragment extends Fragment{
                         String locationName = object.getString("locationName");
                         String subjectType = object.getString("subjectType");
                         String timeToMeet = object.getString("timeToMeet");
-                        String createTime = object.getCreatedAt().toString();
+
+                        Date date = object.getCreatedAt();
+                        DateFormat df = new SimpleDateFormat("HH:mm a");
+                        String createTime = df.format(date);
                         mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
                                 locationName, subjectType, timeToMeet, createTime));
                         mStudySessionAdapter.notifyDataSetChanged();
@@ -215,7 +220,11 @@ public class StudySessionFragment extends Fragment{
                             String locationName = object.getString("locationName");
                             String subjectType = object.getString("subjectType");
                             String timeToMeet = object.getString("timeToMeet");
-                            String createTime = object.getCreatedAt().toString();
+
+                            Date date = object.getCreatedAt();
+                            DateFormat df = new SimpleDateFormat("HH:mm a");
+                            String createTime = df.format(date);
+
                             mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
                                     locationName, subjectType, timeToMeet, createTime));
                             mStudySessionAdapter.notifyDataSetChanged();
