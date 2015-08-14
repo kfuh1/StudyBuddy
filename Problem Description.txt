@@ -1,0 +1,6 @@
+Problem Description 
+
+
+Group Members: John Behnke, Alona King, Kathleen Fuh
+
+The problem we chose to tackle was an eduction problem. Many times we have been studying for an exam or working on an assignment when we come across something that we need help with or need explained urgently; however, we dont know anyone in the class that we can contact immediately. We aimed to solve this issue by allowing students who use our app, StuddyBuddy, to put out a request for help on the spot. They can specify a title of the "session" that gives a super brief description of the issue, a description, which is a longer form of the issue that they are having. They can specify the subject area of the issue, a time to meed at (up to two hours in advanced), and a description of the location they want to meet, like "Fourth Floor library". Any user can then see the requests and decide to go help that student out. 
