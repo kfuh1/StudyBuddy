@@ -22,14 +22,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -72,13 +70,14 @@ public class StudySessionFragment extends Fragment{
         Toast toast = Toast.makeText(getActivity(), "NO CONsdsdsdNECTION!", Toast.LENGTH_SHORT);
              toast.show();
 
-        FetchDataTask weatherTask = new FetchDataTask();
+        FetchDataTask dataTask = new FetchDataTask();
 
-        weatherTask.execute();
+        dataTask.execute();
         mStudySessionAdapter.notifyDataSetChanged();
 
     }
 
+<<<<<<< HEAD
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +92,8 @@ public class StudySessionFragment extends Fragment{
 //        mStudySessionAdapter.notifyDataSetChanged();
 //    }
 
+=======
+>>>>>>> origin/master
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -175,51 +176,8 @@ public class StudySessionFragment extends Fragment{
 //
 //        });
 
-        //TODO: Set up proper floatingactionbutton to launch a "create" view to make a session
-
-
-
         return rootView;
     }
-
-
-
-
-    //Make a fake session object upon pressing the FAB
-    //TODO this is basically a template for how to store to Parse. Its a key-value pair
-    /*
-    "sessionName"
-    "sessionDesc"
-    "locationName"
-    "subjectType"
-    "user"
-
-    */
-
-
-
-   // @Override
-//    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-//
-//        Uri weatherForLocationUri = SessionContract.SessionEntry.buildSessionUri();
-//
-//        return new CursorLoader(getActivity(),
-//                weatherForLocationUri,
-//                FORECAST_COLUMNS,
-//                null,
-//                null,
-//                sortOrder);
-//    }
-
-//    @Override
-//    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-//
-//    }
-//
-//    @Override
-//    public void onLoaderReset(Loader<Cursor> loader) {
-//
-//    }
 
     private class FetchDataTask extends AsyncTask<Void, Void, Void> {
 
@@ -295,7 +253,6 @@ public class StudySessionFragment extends Fragment{
                             }
                         } else {
                             Log.e("StuddyBuddy", e.toString());
-                            //return null;
                         }
                     }
                 });
