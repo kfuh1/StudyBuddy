@@ -58,18 +58,5 @@ public class StudySession {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
-    }
 
-    public void setSubjectType(String subjectType) {
-        this.subjectType = subjectType;
-    }
-
-    public void setTimeToMeet(String timeToMeet) {
-        this.timeToMeet = timeToMeet;
-    }
 }

@@ -3,7 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/studdybuddy_colorPrimary</item>
-        <item name="colorPrimaryDark">@color/studdybuddy_colorDark</item>
+        <item name="android:colorPrimaryDark">@color/studdybuddy_colorDark</item>
+
     </style>
 
 </resources>

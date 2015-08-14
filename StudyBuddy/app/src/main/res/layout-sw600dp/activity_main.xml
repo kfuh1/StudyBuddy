@@ -10,7 +10,7 @@
 
 
     <fragment
-        android:id="@+id/fragment_sessions"
+        android:id="@+id/fragment_sessions_large"
         android:name="android.example.com.studdybuddy.StudySessionFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"

@@ -20,6 +20,8 @@ public class StudySessionAdapter extends ArrayAdapter<StudySession> {
         super(context, 0, sessions);
     }
 
+    private boolean useLarge;
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         StudySession studySession = getItem(position);
@@ -28,11 +30,27 @@ public class StudySessionAdapter extends ArrayAdapter<StudySession> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_studysession, parent, false);
         }
-        TextView sessionName = (TextView) convertView.findViewById(R.id.list_item_studysession_name_textview);
-        TextView sessionDesc = (TextView) convertView.findViewById(R.id.list_item_studysession_desc_textview);
 
-        sessionName.setText(studySession.getSessionName());
-        sessionDesc.setText(studySession.getSessionDescription());
+        if (!useLarge) {
+            TextView sessionName = (TextView) convertView.findViewById(R.id.list_item_studysession_name_textview);
+            TextView sessionDesc = (TextView) convertView.findViewById(R.id.list_item_studysession_desc_textview);
+
+            sessionName.setText(studySession.getSessionName());
+            sessionDesc.setText(studySession.getSessionDescription());
+        }
+        else{
+            TextView sessionName = (TextView) convertView.findViewById(R.id.list_item_studysession_name_textview);
+            TextView sessionDesc = (TextView) convertView.findViewById(R.id.list_item_studysession_desc_textview);
+            TextView sessionLoc = (TextView) convertView.findViewById(R.id.list_item_studysession_loc_textview);
+
+            sessionName.setText(studySession.getSessionName());
+            sessionDesc.setText(studySession.getSessionDescription());
+            sessionLoc.setText(studySession.getLocationName());
+        }
         return convertView;
+    }
+
+    public void setUseLarge(boolean status){
+        useLarge = status;
     }
 }

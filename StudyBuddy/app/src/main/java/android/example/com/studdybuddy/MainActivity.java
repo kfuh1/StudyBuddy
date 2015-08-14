@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -23,45 +24,37 @@ public class MainActivity extends ActionBarActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
 
-    private boolean mTwoPane;
+
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
 
+    private boolean isLarge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (findViewById(R.id.fragment_sessions) != null) {
-            // The detail container view will be present only in the large-screen layouts
-            // (res/layout-sw600dp). If this view is present, then the activity should be
-            // in two-pane mode.
-            mTwoPane = true;
-            // In two-pane mode, show the detail view in this activity by
-            // adding or replacing the detail fragment using a
-            // fragment transaction.
-            if (savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.session_detail_container, new StudySessionDetailActivityFragment())
-                        .commit();
-            }
-        } else {
-            mTwoPane = false;
-            StudySessionFragment forecastFragment =  ((StudySessionFragment)getSupportFragmentManager()
-                    .findFragmentById(R.id.fragment_sessions));
-            //forecastFragment.setUseTodayLayout(!mTwoPane);
 
-
-            // Create the adapter that will return a fragment for each of the three
-            // primary sections of the activity.
-
-            // Set up the ViewPager with the sections adapter.
+        if (findViewById(R.id.fragment_sessions_large) != null) {
+            Toast toast = Toast.makeText(getApplicationContext(), "sdsdsds", Toast.LENGTH_LONG);
+            toast.show();
+            isLarge = true;
+            StudySessionFragment sessionFragment = ((StudySessionFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_sessions_large));
+            sessionFragment.setLargeView(isLarge);
 
         }
-
+        else {
+            isLarge = false;
+            Toast toast = Toast.makeText(getApplicationContext(), "ssssssssgggggg", Toast.LENGTH_LONG);
+            toast.show();
+            StudySessionFragment sessionFragment = ((StudySessionFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_sessions));
+            sessionFragment.setLargeView(isLarge);
+        }
     }
 
 

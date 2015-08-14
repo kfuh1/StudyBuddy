@@ -39,25 +39,12 @@ public class StudySessionFragment extends Fragment{
      * fragment.
      */
 
-
+    private boolean islargeView = false;
     //TODO: Make this adapter array take in a custom "Study Session" object
 
-    public StudySessionAdapter mStudySessionAdapter;
+    private StudySessionAdapter mStudySessionAdapter;
 
-    public ArrayList<StudySession> mStudySessions = new ArrayList<StudySession>(); //Hold teh objects themselves
-
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-
-    public interface Callback {
-        /**
-         * DetailFragmentCallback for when an item has been selected.
-         */
-        public void onItemSelected(Uri detailUri);
-    }
-
+    private ArrayList<StudySession> mStudySessions = new ArrayList<StudySession>(); //Hold teh objects themselves
 
     public StudySessionFragment() {
 
@@ -67,53 +54,39 @@ public class StudySessionFragment extends Fragment{
     public void onResume() {
 
         super.onResume();
-        Toast toast = Toast.makeText(getActivity(), "NO CONsdsdsdNECTION!", Toast.LENGTH_SHORT);
-             toast.show();
+        mStudySessions.clear();
 
-        FetchDataTask dataTask = new FetchDataTask();
 
-        dataTask.execute();
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            FetchDataTask dataTask = new FetchDataTask();
+
+            dataTask.execute();
+        }
+        else{
+            pullLocalData();
+        }
         mStudySessionAdapter.notifyDataSetChanged();
 
     }
 
-<<<<<<< HEAD
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
-    //    @Override
-//    public void onStart() {
-//        super.onStart();
-//        FetchDataTask weatherTask = new FetchDataTask();
-//
-//        weatherTask.execute();
-//        mStudySessionAdapter.notifyDataSetChanged();
-//    }
 
-=======
->>>>>>> origin/master
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //mStudySessionAdapter.notifyDataSetChanged();
-    }
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Toast toast = Toast.makeText(getActivity(), "NO dsdsdssd!", Toast.LENGTH_SHORT);
-        toast.show();
+
+
 
         mStudySessionAdapter = new StudySessionAdapter(getActivity(), mStudySessions);
 
-         //while(!getSessions()); //Try and pull from the datastore and update the listView
 
-//        FetchDataTask weatherTask = new FetchDataTask();
-//
-//        weatherTask.execute();
-        mStudySessionAdapter.notifyDataSetChanged();
 
 
     //Copy the Parse Database to a local one for backup.
@@ -148,7 +121,7 @@ public class StudySessionFragment extends Fragment{
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateSessionActivity.class);
                 startActivity(intent);
-                //newSession();
+
             }
         });
 
@@ -158,25 +131,64 @@ public class StudySessionFragment extends Fragment{
         listView.setAdapter(mStudySessionAdapter);
 
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                Intent intent = new Intent(getActivity(), StudySessionDetailActivity.class);
-//                Bundle bundle = new Bundle(); //Use a bundle to sotre multiple objects with a key/value pair
-//                bundle.putString("sessionName", mStudySessionAdapter.getItem(position).getSessionName());
-//                bundle.putString("sessionDescription", mStudySessionAdapter.getItem(position).getSessionDescription());
-//                bundle.putString("locationName", mStudySessionAdapter.getItem(position).getLocationName());
-//                bundle.putString("subjectType", mStudySessionAdapter.getItem(position).getSubjectType());
-//                bundle.putString("timeToMeet", mStudySessionAdapter.getItem(position).getTimeToMeet());
-//                bundle.putString("createdAt", mStudySessionAdapter.getItem(position).getCreateTime());
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//
-//        });
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    if (!islargeView) {
+                        Intent intent = new Intent(getActivity(), StudySessionDetailActivity.class);
+                        Bundle bundle = new Bundle(); //Use a bundle to sotre multiple objects with a key/value pair
+                        bundle.putString("sessionName", mStudySessionAdapter.getItem(position).getSessionName());
+                        bundle.putString("sessionDescription", mStudySessionAdapter.getItem(position).getSessionDescription());
+                        bundle.putString("locationName", mStudySessionAdapter.getItem(position).getLocationName());
+                        bundle.putString("subjectType", mStudySessionAdapter.getItem(position).getSubjectType());
+                        bundle.putString("timeToMeet", mStudySessionAdapter.getItem(position).getTimeToMeet());
+                        bundle.putString("createdAt", mStudySessionAdapter.getItem(position).getCreateTime());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+
+                }
+
+
+            });
+
+
+        mStudySessionAdapter.setUseLarge(islargeView);
 
         return rootView;
+    }
+
+    public void pullLocalData(){
+        Toast toast = Toast.makeText(getActivity(), "NO INTERNET CONNECTION :(\n Using local data", Toast.LENGTH_LONG);
+        toast.show();
+
+        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("StudySession");
+        parseQuery.fromLocalDatastore();
+        parseQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    for (ParseObject object : list) {
+
+
+                        String sessionName = object.getString("sessionName");
+                        String sessionDesc = object.getString("sessionDesc");
+                        String locationName = object.getString("locationName");
+                        String subjectType = object.getString("subjectType");
+                        String timeToMeet = object.getString("timeToMeet");
+                        String createTime = object.getCreatedAt().toString();
+                        mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
+                                locationName, subjectType, timeToMeet, createTime));
+                        mStudySessionAdapter.notifyDataSetChanged();
+
+                    }
+                } else {
+                    Log.e("StuddyBuddy", e.toString());
+                }
+            }
+        });
     }
 
     private class FetchDataTask extends AsyncTask<Void, Void, Void> {
@@ -188,76 +200,43 @@ public class StudySessionFragment extends Fragment{
          */
         @Override
         protected Void doInBackground(Void... params) {
-            ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
-            mStudySessions.clear();
-            if (networkInfo != null && networkInfo.isConnected()) {
-                //ONLINE
-//                Toast toast = Toast.makeText(getActivity(), "CONNECTION!", Toast.LENGTH_SHORT);
-//                toast.show();
-                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("StudySession");
-                parseQuery.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> list, ParseException e) {
-                        if (e == null) {
-                            for (ParseObject object : list) {
 
-                                object.pinInBackground();
-                                String sessionName = object.getString("sessionName");
-                                String sessionDesc = object.getString("sessionDesc");
-                                String locationName = object.getString("locationName");
-                                String subjectType = object.getString("subjectType");
-                                String timeToMeet = object.getString("timeToMeet");
-                                String createTime = object.getCreatedAt().toString();
-                                mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
-                                        locationName, subjectType, timeToMeet, createTime));
-                                mStudySessionAdapter.notifyDataSetChanged();
+            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("StudySession");
+            parseQuery.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> list, ParseException e) {
+                    if (e == null) {
+                        for (ParseObject object : list) {
 
-                            }
-                        } else {
-                            Log.e("StuddyBuddy", e.toString());
-                            //return null;
+                            object.pinInBackground();
+                            String sessionName = object.getString("sessionName");
+                            String sessionDesc = object.getString("sessionDesc");
+                            String locationName = object.getString("locationName");
+                            String subjectType = object.getString("subjectType");
+                            String timeToMeet = object.getString("timeToMeet");
+                            String createTime = object.getCreatedAt().toString();
+                            mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
+                                    locationName, subjectType, timeToMeet, createTime));
+                            mStudySessionAdapter.notifyDataSetChanged();
+
                         }
+                    } else {
+                        Log.e("StuddyBuddy", e.toString());
+
                     }
-                });
-            }
-            //If there is no internet connection, pull from local datastore
-            else {
-
-//                Toast toast = Toast.makeText(getActivity(), "NO CONNECTION!", Toast.LENGTH_SHORT);
-//                toast.show();
-
-                ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("StudySession");
-                parseQuery.fromLocalDatastore();
-                parseQuery.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> list, ParseException e) {
-                        if (e == null) {
-                            for (ParseObject object : list) {
-                                //DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                                //object.pinInBackground();
-
-                                //object.pinInBackground();
-
-                                String sessionName = object.getString("sessionName");
-                                String sessionDesc = object.getString("sessionDesc");
-                                String locationName = object.getString("locationName");
-                                String subjectType = object.getString("subjectType");
-                                String timeToMeet = object.getString("timeToMeet");
-                                String createTime = object.getCreatedAt().toString();
-                                mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
-                                        locationName, subjectType, timeToMeet, createTime));
-                                mStudySessionAdapter.notifyDataSetChanged();
-
-                            }
-                        } else {
-                            Log.e("StuddyBuddy", e.toString());
-                        }
-                    }
-                });
-            }
+                }
+            });
             return null;
+        }
+
+    }
+
+    public void setLargeView(boolean status){
+
+        islargeView = status;
+        if (mStudySessionAdapter != null) {
+            mStudySessionAdapter.setUseLarge(islargeView);
         }
 
     }
