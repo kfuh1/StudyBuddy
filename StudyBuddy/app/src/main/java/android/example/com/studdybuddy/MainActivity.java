@@ -22,7 +22,8 @@ public class MainActivity extends ActionBarActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    SectionsPagerAdapter mSectionsPagerAdapter;
+
+    private boolean mTwoPane;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -34,16 +35,35 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (findViewById(R.id.fragment_sessions) != null) {
+            // The detail container view will be present only in the large-screen layouts
+            // (res/layout-sw600dp). If this view is present, then the activity should be
+            // in two-pane mode.
+            mTwoPane = true;
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.session_detail_container, new StudySessionDetailActivityFragment())
+                        .commit();
+            }
+        } else {
+            mTwoPane = false;
+            StudySessionFragment forecastFragment =  ((StudySessionFragment)getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment_sessions));
+            //forecastFragment.setUseTodayLayout(!mTwoPane);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+            // Create the adapter that will return a fragment for each of the three
+            // primary sections of the activity.
+
+            // Set up the ViewPager with the sections adapter.
+
+        }
 
     }
+
 
 
     @Override
@@ -71,38 +91,5 @@ public class MainActivity extends ActionBarActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return StudySessionFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            // Show  total pages.
-
-            //TODO Change this to 2 if Map View works
-            return 1;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-
-            }
-            return null;
-        }
-    }
 }

@@ -26,8 +26,8 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
             android:id="@+id/list_item_studysession_desc_textview" />
     </LinearLayout>
 </LinearLayout>

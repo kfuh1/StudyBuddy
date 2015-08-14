@@ -19,6 +19,7 @@ public class StudySessionDetailActivityFragment extends Fragment {
     private String mTimeToMeet;
     private String mCreateTime;
 
+    static final String DETAIL_URI = "URI";
     public StudySessionDetailActivityFragment() {
     }
 

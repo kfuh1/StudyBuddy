@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.example.com.studdybuddy.data.SessionContract;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -39,7 +40,7 @@ public class StudySessionFragment extends Fragment{
      * The fragment argument representing the section number for this
      * fragment.
      */
-    private static final String ARG_SECTION_NUMBER = "section_number";
+
 
     //TODO: Make this adapter array take in a custom "Study Session" object
 
@@ -51,13 +52,14 @@ public class StudySessionFragment extends Fragment{
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static StudySessionFragment newInstance(int sectionNumber) {
-        StudySessionFragment fragment = new StudySessionFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
-        return fragment;
+
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Uri detailUri);
     }
+
 
     public StudySessionFragment() {
 
@@ -77,7 +79,12 @@ public class StudySessionFragment extends Fragment{
 
     }
 
-//    @Override
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    //    @Override
 //    public void onStart() {
 //        super.onStart();
 //        FetchDataTask weatherTask = new FetchDataTask();
@@ -150,23 +157,23 @@ public class StudySessionFragment extends Fragment{
         listView.setAdapter(mStudySessionAdapter);
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(getActivity(), StudySessionDetailActivity.class);
-                Bundle bundle = new Bundle(); //Use a bundle to sotre multiple objects with a key/value pair
-                bundle.putString("sessionName", mStudySessionAdapter.getItem(position).getSessionName());
-                bundle.putString("sessionDescription", mStudySessionAdapter.getItem(position).getSessionDescription());
-                bundle.putString("locationName", mStudySessionAdapter.getItem(position).getLocationName());
-                bundle.putString("subjectType", mStudySessionAdapter.getItem(position).getSubjectType());
-                bundle.putString("timeToMeet", mStudySessionAdapter.getItem(position).getTimeToMeet());
-                bundle.putString("createdAt", mStudySessionAdapter.getItem(position).getCreateTime());
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                Intent intent = new Intent(getActivity(), StudySessionDetailActivity.class);
+//                Bundle bundle = new Bundle(); //Use a bundle to sotre multiple objects with a key/value pair
+//                bundle.putString("sessionName", mStudySessionAdapter.getItem(position).getSessionName());
+//                bundle.putString("sessionDescription", mStudySessionAdapter.getItem(position).getSessionDescription());
+//                bundle.putString("locationName", mStudySessionAdapter.getItem(position).getLocationName());
+//                bundle.putString("subjectType", mStudySessionAdapter.getItem(position).getSubjectType());
+//                bundle.putString("timeToMeet", mStudySessionAdapter.getItem(position).getTimeToMeet());
+//                bundle.putString("createdAt", mStudySessionAdapter.getItem(position).getCreateTime());
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//
+//        });
 
         //TODO: Set up proper floatingactionbutton to launch a "create" view to make a session
 
