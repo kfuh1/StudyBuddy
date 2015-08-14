@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -62,23 +63,37 @@ public class CreateSessionActivity extends ActionBarActivity implements AdapterV
             subjectName = subjectSpinner.getSelectedItem().toString();
         }
 
-        /* store key value pairs into Parse database */
-        sessionObject.put("sessionName", titleText.getText().toString());
-        sessionObject.put("sessionDesc", descText.getText().toString());
-        sessionObject.put("locationName", locationText.getText().toString());
-        sessionObject.put("subjectType", subjectName);
-        sessionObject.put("timeToMeet", timeToMeet);
+        if(titleText.getText().toString().equals("") || titleText.getText().toString().equals("Enter a title") || descText.getText().toString().equals("")  || descText.getText().toString().equals("Enter a description") || locationText.getText().toString().equals("") ||locationText.getText().toString().equals("Enter a location")){
+            Toast toast = Toast.makeText(getApplicationContext(), "Error! Please fill out all text fields :D ", Toast.LENGTH_LONG);
+            toast.show();
+        }
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-
-        if (networkInfo != null && networkInfo.isConnected() && user != null) {
-            sessionObject.saveInBackground();
-            finish();
+        else if(titleText.getText().toString().length() >= 20){
+            Toast toast = Toast.makeText(getApplicationContext(), "Error! Title too long.\nMax number of characters is 20", Toast.LENGTH_LONG);
+            toast.show();
+        }
+        else if(descText.getText().toString().length() >= 45){
+            Toast toast = Toast.makeText(getApplicationContext(), "Error! Description too long.\nMax number of characters is 45", Toast.LENGTH_LONG);
+            toast.show();
         }
         else {
-            sessionObject.saveEventually();
-            finish();
+        /* store key value pairs into Parse database */
+            sessionObject.put("sessionName", titleText.getText().toString());
+            sessionObject.put("sessionDesc", descText.getText().toString());
+            sessionObject.put("locationName", locationText.getText().toString());
+            sessionObject.put("subjectType", subjectName);
+            sessionObject.put("timeToMeet", timeToMeet);
+
+            ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+            if (networkInfo != null && networkInfo.isConnected() && user != null) {
+                sessionObject.saveInBackground();
+                finish();
+            } else {
+                sessionObject.saveEventually();
+                finish();
+            }
         }
     }
 

@@ -36,7 +36,7 @@
         android:minHeight="0dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Subject"
-        android:id="@+id/textView"
+        android:id="@+id/list_item_studdysession_tilTime_textview"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/classText"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/list_item_studdysession_tilTime_textview"
         android:layout_centerHorizontal="true" />
 
     <TextView

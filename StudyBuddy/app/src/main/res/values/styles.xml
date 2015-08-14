@@ -4,7 +4,11 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/studdybuddy_colorPrimary</item>
         <item name="android:colorPrimaryDark">@color/studdybuddy_colorDark</item>
+    <item name="android:colorAccent">@color/studdybuddy_colorAccent</item>
+        <item name="android:textColorHighlight">@color/studdybuddy_colorAccent</item>
 
+
+        <item name="android:textSelectHandleWindowStyle">@color/studdybuddy_colorPrimary</item>
     </style>
 
 </resources>

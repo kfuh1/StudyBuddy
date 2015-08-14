@@ -3,42 +3,82 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
     android:minHeight="100dp"
     android:weightSum="1">
     <!--NEED TO MAKE THISM BETTER FOR LOWER APIS-->
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="1">
 
-        <TextView
-            android:paddingLeft="16dp"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/list_item_studysession_name_textview" />
+            android:layout_gravity="center|left"
+            android:gravity="left">
 
-        <TextView
-            android:paddingLeft="16dp"
+            <TextView
+                android:paddingLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/list_item_studysession_name_textview" />
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/list_item_studysession_desc_textview" />
-
-        <TextView
-            android:paddingLeft="16dp"
+            <TextView
+                android:paddingLeft="16dp"
 
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/list_item_studysession_loc_textview" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Large Text"
+                android:id="@+id/list_item_studysession_loc_textview" />
+
+            <TextView
+                android:paddingLeft="16dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:text="Large Text"
+                android:id="@+id/list_item_studysession_desc_textview" />
+
+            <TextView
+                android:paddingLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Large Text"
+                android:id="@+id/list_item_studysession_subj_textview" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/list_item_studdysession_tilTime_textview"
+                android:paddingRight="16dp"
+                android:layout_gravity="right" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/list_item_studdysession_creationTime_textview"
+                android:paddingRight="16dp"
+                android:layout_gravity="right" />
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

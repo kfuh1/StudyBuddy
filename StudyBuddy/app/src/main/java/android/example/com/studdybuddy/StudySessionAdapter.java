@@ -34,18 +34,28 @@ public class StudySessionAdapter extends ArrayAdapter<StudySession> {
         if (!useLarge) {
             TextView sessionName = (TextView) convertView.findViewById(R.id.list_item_studysession_name_textview);
             TextView sessionDesc = (TextView) convertView.findViewById(R.id.list_item_studysession_desc_textview);
+            TextView sessionTil = (TextView) convertView.findViewById(R.id.list_item_studdysession_tilTime_textview);
+            TextView sessionCreate = (TextView) convertView.findViewById(R.id.list_item_studdysession_creationTime_textview);
 
             sessionName.setText(studySession.getSessionName());
-            sessionDesc.setText(studySession.getSessionDescription());
+            sessionDesc.setText(studySession.getLocationName());
+            sessionTil.setText("In " + studySession.getTimeToMeet());
+            sessionCreate.setText("From " + studySession.getCreateTime());
         }
         else{
             TextView sessionName = (TextView) convertView.findViewById(R.id.list_item_studysession_name_textview);
             TextView sessionDesc = (TextView) convertView.findViewById(R.id.list_item_studysession_desc_textview);
             TextView sessionLoc = (TextView) convertView.findViewById(R.id.list_item_studysession_loc_textview);
+            TextView sessionSubj = (TextView) convertView.findViewById(R.id.list_item_studysession_subj_textview);
+            TextView sessionTil = (TextView) convertView.findViewById(R.id.list_item_studdysession_tilTime_textview);
+            TextView sessionCreate = (TextView) convertView.findViewById(R.id.list_item_studdysession_creationTime_textview);
 
             sessionName.setText(studySession.getSessionName());
             sessionDesc.setText(studySession.getSessionDescription());
             sessionLoc.setText(studySession.getLocationName());
+            sessionSubj.setText(studySession.getSubjectType());
+            sessionTil.setText("In " + studySession.getTimeToMeet());
+            sessionCreate.setText("From " + studySession.getCreateTime());
         }
         return convertView;
     }

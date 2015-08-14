@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -30,9 +29,9 @@ import com.parse.ParseQuery;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
-import java.util.Date;
 
 
 public class StudySessionFragment extends Fragment{
@@ -57,18 +56,16 @@ public class StudySessionFragment extends Fragment{
 
         super.onResume();
         mStudySessions.clear();
-
+        pullLocalData();
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
+
             FetchDataTask dataTask = new FetchDataTask();
 
             dataTask.execute();
-        }
-        else{
-            pullLocalData();
         }
         mStudySessionAdapter.notifyDataSetChanged();
 
@@ -163,8 +160,6 @@ public class StudySessionFragment extends Fragment{
     }
 
     public void pullLocalData(){
-        Toast toast = Toast.makeText(getActivity(), "NO INTERNET CONNECTION :(\n Using local data", Toast.LENGTH_LONG);
-        toast.show();
 
         ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("StudySession");
         parseQuery.fromLocalDatastore();
@@ -212,6 +207,7 @@ public class StudySessionFragment extends Fragment{
                 @Override
                 public void done(List<ParseObject> list, ParseException e) {
                     if (e == null) {
+                        mStudySessions.clear();
                         for (ParseObject object : list) {
 
                             object.pinInBackground();
@@ -227,7 +223,7 @@ public class StudySessionFragment extends Fragment{
 
                             mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
                                     locationName, subjectType, timeToMeet, createTime));
-                            mStudySessionAdapter.notifyDataSetChanged();
+
 
                         }
                     } else {
@@ -236,6 +232,8 @@ public class StudySessionFragment extends Fragment{
                     }
                 }
             });
+            mStudySessionAdapter.notifyDataSetChanged();
+
             return null;
         }
 

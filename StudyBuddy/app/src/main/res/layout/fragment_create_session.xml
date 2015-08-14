@@ -1,108 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:divider="?android:attr/dividerHorizontal"
-    android:minHeight="?android:attr/listPreferredItemHeight">
 
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:minHeight="60dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title: "
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="10dp"/>
-        android::minHeight =
-        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="?android:attr/dividerHorizontal"
+        android:orientation="vertical"
+        android:measureWithLargestChild="true"
+        android:weightSum="1"
+        android:showDividers="beginning|middle"
+        android:gravity="left">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/title_text"
-            android:paddingLeft="10dp"
-            android:text="@string/enter_text">
-            <requestFocus />
-        </EditText>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:minHeight="60dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description: "
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="10dp"/>
-        <EditText
+            android:orientation="vertical"
+            android:minHeight="60dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title: "
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="10dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/title_text"
+                android:paddingLeft="10dp"
+                android:text="@string/title_text"
+                android:inputType="text"
+                android:layout_gravity="center_vertical"
+                android:textColorHint="@color/studdybuddy_colorPrimary">
+
+            </EditText>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/desc_text"
-            android:paddingLeft="10dp"
-            android:text="@string/enter_text">
-            <requestFocus />
-        </EditText>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="60dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Subject: "
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="10dp"/>
-        <Spinner
-            android:id="@+id/subject_spinner"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:minHeight="60dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Meet in: "
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="10dp"/>
-        <Spinner
-            android:id="@+id/meeting_time_spinner"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:minHeight="60dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location: "
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="10dp" />
-        <EditText
+            android:orientation="vertical"
+            android:minHeight="60dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description: "
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="10dp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/desc_text"
+                android:paddingLeft="10dp"
+                android:text="@string/desc_text"
+                android:inputType="text"
+                android:layout_gravity="center_vertical">
+
+            </EditText>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/location_text"
-            android:paddingLeft="10dp"
-            android:text="@string/enter_text">
-            <requestFocus />
-        </EditText>
+            android:minHeight="60dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subject: "
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="10dp"/>
+            <Spinner
+                android:id="@+id/subject_spinner"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:spinnerMode="dialog"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:focusableInTouchMode="false"
+                android:gravity="center|left" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:minHeight="60dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meet in: "
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="10dp"/>
+            <Spinner
+                android:id="@+id/meeting_time_spinner"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:spinnerMode="dialog"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location: "
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="10dp" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/location_text"
+                android:paddingLeft="10dp"
+                android:text="@string/loc_text"
+                android:inputType="text"
+                android:layout_gravity="center_vertical">
+
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save_button"
+                android:layout_gravity="center_horizontal"
+                android:onClick="saveCreateData"/>
+        </LinearLayout>
     </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save_button"
-        android:layout_gravity="center_horizontal"
-        android:onClick="saveCreateData"/>
-</LinearLayout>
+</ScrollView>

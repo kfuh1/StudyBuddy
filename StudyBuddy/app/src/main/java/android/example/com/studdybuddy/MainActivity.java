@@ -1,16 +1,11 @@
 package android.example.com.studdybuddy;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import java.util.Locale;
 
 //TODO  IMPORTANT!!!!!! Make sure to downlaoad "Android Support Library" from, under Extras in the Android SDK Manager
 public class MainActivity extends ActionBarActivity {
@@ -39,8 +34,7 @@ public class MainActivity extends ActionBarActivity {
 
 
         if (findViewById(R.id.fragment_sessions_large) != null) {
-            Toast toast = Toast.makeText(getApplicationContext(), "sdsdsds", Toast.LENGTH_LONG);
-            toast.show();
+
             isLarge = true;
             StudySessionFragment sessionFragment = ((StudySessionFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.fragment_sessions_large));
@@ -49,8 +43,7 @@ public class MainActivity extends ActionBarActivity {
         }
         else {
             isLarge = false;
-            Toast toast = Toast.makeText(getApplicationContext(), "ssssssssgggggg", Toast.LENGTH_LONG);
-            toast.show();
+
             StudySessionFragment sessionFragment = ((StudySessionFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.fragment_sessions));
             sessionFragment.setLargeView(isLarge);
