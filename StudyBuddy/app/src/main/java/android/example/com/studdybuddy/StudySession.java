@@ -12,11 +12,12 @@ public class StudySession {
     private String subjectType;
     private String timeToMeet;
     private String createTime;
+    private String pid;
 
     //TODO: Add things like Parse ID, Lat/Long for location, Location Name, Class Type, ETC
 
     public StudySession(String sName, String sDesc, String sLocName, String sSubject,
-                        String sTimeToMeet, String sCreateTime){
+                        String sTimeToMeet, String sCreateTime, String spid){
 
         this.sessionName = sName;
         this.sessionDescription = sDesc;
@@ -24,6 +25,7 @@ public class StudySession {
         this.subjectType = sSubject;
         this.timeToMeet = sTimeToMeet;
         this.createTime = sCreateTime;
+        this.pid = spid;
     }
 
     //Thank you based JetBrains and getter/setter auto generation
@@ -58,5 +60,7 @@ public class StudySession {
         return createTime;
     }
 
-
+    public String getPid() {
+        return pid;
+    }
 }
