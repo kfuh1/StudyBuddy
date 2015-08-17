@@ -1,9 +1,15 @@
 package android.example.com.studdybuddy;
 
+import android.database.Cursor;
+import android.example.com.studdybuddy.data.SessionContract;
 import android.example.com.studdybuddy.data.SessionDbHelper;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +21,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class StudySessionDetailActivityFragment extends Fragment {
+public class StudySessionDetailActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private String mTitle;
     private String mDesc;
     private String mSubject;
@@ -24,6 +30,15 @@ public class StudySessionDetailActivityFragment extends Fragment {
     private String mCreateTime;
     private String mPID;
 
+    private Uri mUri;
+
+    private static final int COL_ID = 0;
+    private static final int COL_PID = 1;
+
+    private static final String[] DETAIL_COLUMNS = {
+            SessionContract.TABLE + "." + SessionContract.Columns.COLUMN_ID,
+            SessionContract.Columns.COLUMN_PID
+    };
     static final String DETAIL_URI = "URI";
     public StudySessionDetailActivityFragment() {
     }
@@ -82,5 +97,27 @@ public class StudySessionDetailActivityFragment extends Fragment {
 
         }
         return rootView;
+    }
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle args){
+        if(null != mUri){
+            return new CursorLoader(
+                    getActivity(),
+                    mUri,
+                    DETAIL_COLUMNS,
+                    null,
+                    null,
+                    null
+            );
+        }
+        return null;
+    }
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data){
+        /* TODO implement */
+    }
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader){
+        /* TODO implement */
     }
 }

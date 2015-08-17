@@ -4,6 +4,8 @@ package android.example.com.studdybuddy;
  * Created by John on 7/18/15.
  */
 
+import android.database.Cursor;
+import android.support.v4.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.example.com.studdybuddy.data.SessionDbHelper;
@@ -13,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +36,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class StudySessionFragment extends Fragment{
+public class StudySessionFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -45,6 +48,9 @@ public class StudySessionFragment extends Fragment{
     private StudySessionAdapter mStudySessionAdapter;
 
     private ArrayList<StudySession> mStudySessions = new ArrayList<StudySession>(); //Hold teh objects themselves
+
+    static final int COL_ID = 0;
+    static final int COL_PID = 1;
 
     public StudySessionFragment() {
 
@@ -70,8 +76,8 @@ public class StudySessionFragment extends Fragment{
         mStudySessionAdapter.notifyDataSetChanged();
         String strI = Integer.toString(SessionDbHelper.getInstance(getActivity()).countPIDS());
 
-            Toast toast = Toast.makeText(getActivity(), strI , Toast.LENGTH_SHORT);
-            toast.show();
+        Toast toast = Toast.makeText(getActivity(), strI , Toast.LENGTH_SHORT);
+        toast.show();
 
     }
 
@@ -116,28 +122,28 @@ public class StudySessionFragment extends Fragment{
 
 
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    if (!islargeView) {
-                        Intent intent = new Intent(getActivity(), StudySessionDetailActivity.class);
-                        Bundle bundle = new Bundle(); //Use a bundle to sotre multiple objects with a key/value pair
-                        bundle.putString("sessionName", mStudySessionAdapter.getItem(position).getSessionName());
-                        bundle.putString("sessionDescription", mStudySessionAdapter.getItem(position).getSessionDescription());
-                        bundle.putString("locationName", mStudySessionAdapter.getItem(position).getLocationName());
-                        bundle.putString("subjectType", mStudySessionAdapter.getItem(position).getSubjectType());
-                        bundle.putString("timeToMeet", mStudySessionAdapter.getItem(position).getTimeToMeet());
-                        bundle.putString("createdAt", mStudySessionAdapter.getItem(position).getCreateTime());
-                        bundle.putString("pid", mStudySessionAdapter.getItem(position).getPid());
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    /* in here, put Loader */
+                if (!islargeView) {
+                    Intent intent = new Intent(getActivity(), StudySessionDetailActivity.class);
+                    Bundle bundle = new Bundle(); //Use a bundle to sotre multiple objects with a key/value pair
+                    bundle.putString("sessionName", mStudySessionAdapter.getItem(position).getSessionName());
+                    bundle.putString("sessionDescription", mStudySessionAdapter.getItem(position).getSessionDescription());
+                    bundle.putString("locationName", mStudySessionAdapter.getItem(position).getLocationName());
+                    bundle.putString("subjectType", mStudySessionAdapter.getItem(position).getSubjectType());
+                    bundle.putString("timeToMeet", mStudySessionAdapter.getItem(position).getTimeToMeet());
+                    bundle.putString("createdAt", mStudySessionAdapter.getItem(position).getCreateTime());
+                    bundle.putString("pid", mStudySessionAdapter.getItem(position).getPid());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
 
+            }
 
-            });
+
+        });
 
 
         mStudySessionAdapter.setUseLarge(islargeView);
@@ -232,6 +238,19 @@ public class StudySessionFragment extends Fragment{
             mStudySessionAdapter.setUseLarge(islargeView);
         }
 
+    }
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle){
+        /* TODO implement */
+        return null;
+    }
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor data){
+        /* TODO implement*/
+    }
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader){
+        /* TODO */
     }
 
 }
