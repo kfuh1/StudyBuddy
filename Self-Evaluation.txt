@@ -16,13 +16,13 @@ Permissions:
 Content Provider:
 
 	This is were things get kind of tricky. For out app, we needed to be able to push data from a device to the web so another device can download it. This obviously requires some sort of web server to host said data. Since creating a stable/reliable one would have taken a great deal of time (our group was dealing with internships/jobs this summer) and money (hosting/data fees), we decided to use Parse for our back end. (https://www.parse.com). The Parse API allows us to easily push and pull data from its back end. 
-	Now we realize that by using Parse, we don't directly implement a content provider/loader. We tried to, however, it proved to interfere with Parse's own back end too much. Our attempt at the Content Provider is called "Session Provider". The table is called "sessions" We attempted to store a duplicate copy of the local Parse Data Store with a sqlite3 db, but again, it was redundant and would encounter a lot of errors when interacting with the parse db. Our app's core functionality, sharing content between users, would not be possible without parse. We were told by the CodeU staff that they might handle this on a case by case basis.
+	A content provider is used called “session provider”. What it does is store a Parse Object ID and a ID in a data base. Only the objects that the user using the phone get stored into that db. When the user then loads the detail view of one of the sessions and they are the one that made it, it turns the text purple. 
 
 	StuddyBuddy talks to Parse with the Parse API
 
 What Loaders/Adapters are used?
 
-	Since Parse uses its own DataBase for the local end, we do not directly implement a loader. We tried to, but it often caused inaccuracies and error when it worked. Again, without Parse, our application would not work. 
+	Since Parse uses its own DataBase for the local end, we do not directly implement a loader. I’ve been told by my partner Kathleen Fuh that Parse is now being accepted as a Content Provider/Loader. She was able to fully submit. 
 
 	We use a custom adapter called "StudySessionAdapter" which extends "ArrayAdapter" to allow us to use our custom object called "StudySessoins" in an array adapter. 
 
