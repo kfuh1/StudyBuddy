@@ -1,8 +1,13 @@
 package android.example.com.studdybuddy;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.example.com.studdybuddy.data.SessionContract;
+import android.example.com.studdybuddy.data.SessionDbHelper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -12,17 +17,25 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 /**
  * Created by Kathleen on 8/7/2015.
  */
 public class CreateSessionActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_session);
+
+
+
 
         /* set dropdown list of meeting time choice */
         Spinner timeSpinner = (Spinner) findViewById(R.id.meeting_time_spinner);
@@ -41,7 +54,7 @@ public class CreateSessionActivity extends ActionBarActivity implements AdapterV
 
     /* Method that gets called when SAVE button is clicked*/
     public void saveCreateData(View view) {
-        ParseObject sessionObject = new ParseObject("StudySession");
+        final ParseObject sessionObject = new ParseObject("StudySession");
         ParseUser user = ParseUser.getCurrentUser();
 
         /* get all fields from view */
@@ -84,11 +97,38 @@ public class CreateSessionActivity extends ActionBarActivity implements AdapterV
             sessionObject.put("subjectType", subjectName);
             sessionObject.put("timeToMeet", timeToMeet);
 
+
+
             ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
             if (networkInfo != null && networkInfo.isConnected() && user != null) {
-                sessionObject.saveInBackground();
+                sessionObject.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            // Saved successfully.
+
+                            String id = sessionObject.getObjectId();
+
+                            SQLiteDatabase db =  SessionDbHelper.getInstance(getApplicationContext()).getWritableDatabase();
+                            ContentValues values = new ContentValues();
+                            values.clear();
+                            values.put(SessionContract.Columns.COLUMN_PID, id);
+                            Uri uri = SessionContract.CONTENT_URI;
+                            getApplicationContext().getContentResolver().insert(uri, values);
+
+//                            Toast toast = Toast.makeText(getApplicationContext(), id, Toast.LENGTH_LONG);
+//                            toast.show();
+
+                        } else {
+                            // The save failed.
+
+                        }
+                    }
+                });
+
+
                 finish();
             } else {
                 sessionObject.saveEventually();

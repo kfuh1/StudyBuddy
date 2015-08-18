@@ -1,11 +1,15 @@
 package android.example.com.studdybuddy;
 
+import android.example.com.studdybuddy.data.SessionDbHelper;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.List;
 
 
 /**
@@ -18,6 +22,7 @@ public class StudySessionDetailActivityFragment extends Fragment {
     private String mLocation;
     private String mTimeToMeet;
     private String mCreateTime;
+    private String mPID;
 
     static final String DETAIL_URI = "URI";
     public StudySessionDetailActivityFragment() {
@@ -51,6 +56,29 @@ public class StudySessionDetailActivityFragment extends Fragment {
             mCreateTime = bundle.getString("createdAt");
             ((TextView) rootView.findViewById(R.id.createTimeText))
                     .setText(mCreateTime);
+            mPID = bundle.getString("pid");
+
+            List<String> tempPID = SessionDbHelper.getInstance(getActivity()).getallPIDS();
+            for (int i = 0; i < tempPID.size(); i++) {
+                if (mPID.equals(tempPID.get(i))){
+                    ((TextView) rootView.findViewById(R.id.titleText)) /*detail_text_temp*/
+                            .setTextColor(Color.parseColor("#673AB7"));
+                    ((TextView) rootView.findViewById(R.id.descriptionText)) /*detail_text_temp*/
+                            .setTextColor(Color.parseColor("#673AB7"));
+                    ((TextView) rootView.findViewById(R.id.classText)) /*detail_text_temp*/
+                            .setTextColor(Color.parseColor("#673AB7"));
+
+                    ((TextView) rootView.findViewById(R.id.timeToMeetText)) /*detail_text_temp*/
+                            .setTextColor(Color.parseColor("#673AB7"));
+                    ((TextView) rootView.findViewById(R.id.createTimeText)) /*detail_text_temp*/
+                            .setTextColor(Color.parseColor("#673AB7"));
+
+                    ((TextView) rootView.findViewById(R.id.locationText)) /*detail_text_temp*/
+                            .setTextColor(Color.parseColor("#673AB7"));
+                }
+            }
+
+
 
         }
         return rootView;

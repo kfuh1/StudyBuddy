@@ -4,10 +4,9 @@ package android.example.com.studdybuddy;
  * Created by John on 7/18/15.
  */
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.example.com.studdybuddy.data.SessionContract;
+import android.example.com.studdybuddy.data.SessionDbHelper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -20,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -31,7 +31,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 
 public class StudySessionFragment extends Fragment{
@@ -57,6 +56,7 @@ public class StudySessionFragment extends Fragment{
         super.onResume();
         mStudySessions.clear();
         pullLocalData();
+        mStudySessionAdapter.notifyDataSetChanged();
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -68,6 +68,10 @@ public class StudySessionFragment extends Fragment{
             dataTask.execute();
         }
         mStudySessionAdapter.notifyDataSetChanged();
+        String strI = Integer.toString(SessionDbHelper.getInstance(getActivity()).countPIDS());
+
+            Toast toast = Toast.makeText(getActivity(), strI , Toast.LENGTH_SHORT);
+            toast.show();
 
     }
 
@@ -88,25 +92,6 @@ public class StudySessionFragment extends Fragment{
 
 
 
-    //Copy the Parse Database to a local one for backup.
-        Vector<ContentValues> cVVector = new Vector<ContentValues>(mStudySessionAdapter.getCount());
-        for (int i = 0; i < mStudySessionAdapter.getCount(); i++){
-            ContentValues sessionValues = new ContentValues();
-
-            StudySession pulledInfo = mStudySessionAdapter.getItem(i);
-            sessionValues.put(SessionContract.SessionEntry.SESSIONNAME, pulledInfo.getSessionName());
-            sessionValues.put(SessionContract.SessionEntry.SESSIONDESC, pulledInfo.getSessionDescription());
-
-
-            cVVector.add(sessionValues);
-        }
-
-        if ( cVVector.size() > 0 ) {
-            ContentValues[] cvArray = new ContentValues[cVVector.size()];
-            cVVector.toArray(cvArray);
-            getActivity().getContentResolver().bulkInsert(SessionContract.SessionEntry.CONTENT_URI, cvArray);
-
-        }
 
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -144,6 +129,7 @@ public class StudySessionFragment extends Fragment{
                         bundle.putString("subjectType", mStudySessionAdapter.getItem(position).getSubjectType());
                         bundle.putString("timeToMeet", mStudySessionAdapter.getItem(position).getTimeToMeet());
                         bundle.putString("createdAt", mStudySessionAdapter.getItem(position).getCreateTime());
+                        bundle.putString("pid", mStudySessionAdapter.getItem(position).getPid());
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
@@ -180,7 +166,7 @@ public class StudySessionFragment extends Fragment{
                         DateFormat df = new SimpleDateFormat("HH:mm a");
                         String createTime = df.format(date);
                         mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
-                                locationName, subjectType, timeToMeet, createTime));
+                                locationName, subjectType, timeToMeet, createTime, object.getObjectId()));
                         mStudySessionAdapter.notifyDataSetChanged();
 
                     }
@@ -222,7 +208,7 @@ public class StudySessionFragment extends Fragment{
                             String createTime = df.format(date);
 
                             mStudySessionAdapter.add(new StudySession(sessionName, sessionDesc,
-                                    locationName, subjectType, timeToMeet, createTime));
+                                    locationName, subjectType, timeToMeet, createTime, object.getObjectId()));
 
 
                         }
@@ -232,7 +218,7 @@ public class StudySessionFragment extends Fragment{
                     }
                 }
             });
-            mStudySessionAdapter.notifyDataSetChanged();
+
 
             return null;
         }
