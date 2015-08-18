@@ -68,10 +68,7 @@ public class StudySessionFragment extends Fragment{
             dataTask.execute();
         }
         mStudySessionAdapter.notifyDataSetChanged();
-        String strI = Integer.toString(SessionDbHelper.getInstance(getActivity()).countPIDS());
 
-            Toast toast = Toast.makeText(getActivity(), strI , Toast.LENGTH_SHORT);
-            toast.show();
 
     }
 
